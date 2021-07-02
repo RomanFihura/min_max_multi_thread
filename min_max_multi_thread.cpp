@@ -12,13 +12,17 @@ void vector_insert(std::vector<uint32_t> &v, uint32_t max, uint32_t amount)
 };
 void min_max(uint32_tCIt begin, uint32_tCIt end, std::pair<uint32_tCIt, uint32_tCIt> &minMax)
 {
+
     minMax = std::minmax_element(begin, end);
 }
 
 std::pair<uint32_tCIt, uint32_tCIt> multi_thr(const std::vector<uint32_t> &v)
 {
+    if (v.empty())
+    {
+        throw std::invalid_argument("Input vector is empty");
+    }
     uint32_t coreCount = std::max(std::thread::hardware_concurrency(), 1u);
-    // uint32_t coreCount = std::thread::hardware_concurrency();
     const auto step = v.size() / coreCount;
 
     std::vector<std::thread> threads;
